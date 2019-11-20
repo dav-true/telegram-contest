@@ -5,30 +5,20 @@ from glob import glob
 import io
 import multiprocessing
 from natsort import natsorted, ns
-from html2text import HTML2Text
 
 getTime = time.time()
-mainList = glob('D:/DataClusteringSample0107/20191105/13/*.html')
+mainList = glob('D:/DataClusteringSample0107/20191101/*/*.html')
 mainList = natsorted(mainList, alg=ns.IGNORECASE)
 
+print(len(mainList))
 fileFolder = io.open(mainList[0], 'r', encoding='utf-8')
 getHtml = fileFolder.read()
 
-checkP = re.findall('<p>(.*)</p>', getHtml)
-checkH = re.findall('<h\d>(.*)</h\d>' , getHtml)
-checkTittle = re.findall('property="og:title" content="(.*)"', getHtml)
-checkDescription = re.findall('property="og:description" content="(.*)"', getHtml)
 
 def sumStrings(x,y,z,i):
     sum = str(x + y + z + i)
     return sum
 
-# sumStrings(checkP,checkH,checkTittle,checkDescription)
-
-# print(sumStrings(checkH, checkP, checkTittle, checkDescription))
-
-
-print('----- %s' % (time.time() - getTime))
 
 def checklist0():
     for i in range(len(mainList)):
@@ -39,21 +29,21 @@ def checklist0():
                     getHtml = fileFolder.read()
                     print(fileFolder.name)
 
-                    loseN = re.sub(r'\n', ' ', getHtml)
-                    result = re.search('<body>(.*)</body>', loseN)
-                    nextRes = re.sub(r'<h1>', '', result.group(1))
-                    nextRes1 = re.sub(r'<p>', '', nextRes)
+                    checkP = re.findall('<p>(.*)</p>', getHtml)
+                    checkH = re.findall('<h\d>(.*)</h\d>', getHtml)
+                    checkTittle = re.findall('property="og:title" content="(.*)"', getHtml)
+                    checkDescription = re.findall('property="og:description" content="(.*)"', getHtml)
 
-                    newList = nextRes1.split()
+                    newList = sumStrings(checkP, checkH, checkTittle, checkDescription).split()
                     transList = []
 
-                    x = 0
                     for x in range(len(newList)):
-                        if x % 7 == 1:
+                        if x % 3 == 1:
                             transList.append(newList[x])
 
                     res = langdetect.detect(str(newList))
                     print(res)
+
                 except IndexError:
                     break
 
@@ -68,22 +58,22 @@ def checklist1():
                 try:
                     fileFolder = io.open(mainList[l], 'r', encoding='utf-8')
                     getHtml = fileFolder.read()
-                    # print(fileFolder.name)
+                    print(fileFolder.name)
 
-                    loseN = re.sub(r'\n', ' ', getHtml)
-                    result = re.search('<body>(.*)</body>', loseN)
-                    nextRes = re.sub(r'<h1>', '', result.group(1))
-                    nextRes1 = re.sub(r'<p>', '', nextRes)
+                    checkP = re.findall('<p>(.*)</p>', getHtml)
+                    checkH = re.findall('<h\d>(.*)</h\d>', getHtml)
+                    checkTittle = re.findall('property="og:title" content="(.*)"', getHtml)
+                    checkDescription = re.findall('property="og:description" content="(.*)"', getHtml)
 
-                    newList = nextRes1.split()
+                    newList = sumStrings(checkP, checkH, checkTittle, checkDescription).split()
                     transList = []
 
-                    x = 0
-                    for x in range(len(newList)-1):
-                        if x % 7 == 1:
+                    for x in range(len(newList)):
+                        if x % 3 == 1:
                             transList.append(newList[x])
 
                     res = langdetect.detect(str(newList))
+                    print(res)
                 except IndexError:
                     break
             except langdetect.lang_detect_exception.LangDetectException:
@@ -97,22 +87,23 @@ def checklist2():
                 try:
                     fileFolder = io.open(mainList[i], 'r', encoding='utf-8')
                     getHtml = fileFolder.read()
-                    # print(fileFolder.name)
+                    print(fileFolder.name)
 
-                    loseN = re.sub(r'\n', ' ', getHtml)
-                    result = re.search('<body>(.*)</body>', loseN)
-                    nextRes = re.sub(r'<h1>', '', result.group(1))
-                    nextRes1 = re.sub(r'<p>', '', nextRes)
+                    checkP = re.findall('<p>(.*)</p>', getHtml)
+                    checkH = re.findall('<h\d>(.*)</h\d>', getHtml)
+                    checkTittle = re.findall('property="og:title" content="(.*)"', getHtml)
+                    checkDescription = re.findall('property="og:description" content="(.*)"', getHtml)
 
-                    newList = nextRes1.split()
+                    newList = sumStrings(checkP, checkH, checkTittle, checkDescription).split()
                     transList = []
 
-                    x = 0
                     for x in range(len(newList)):
-                        if x % 7 == 1:
+                        if x % 3 == 1:
                             transList.append(newList[x])
 
                     res = langdetect.detect(str(newList))
+                    print(res)
+
                 except IndexError:
                     break
 
@@ -127,32 +118,33 @@ def checklist3():
                 try:
                     fileFolder = io.open(mainList[l], 'r', encoding='utf-8')
                     getHtml = fileFolder.read()
-                    # print(fileFolder.name)
+                    print(fileFolder.name)
 
-                    loseN = re.sub(r'\n', ' ', getHtml)
-                    result = re.search('<body>(.*)</body>', loseN)
-                    nextRes = re.sub(r'<h1>', '', result.group(1))
-                    nextRes1 = re.sub(r'<p>', '', nextRes)
+                    checkP = re.findall('<p>(.*)</p>', getHtml)
+                    checkH = re.findall('<h\d>(.*)</h\d>', getHtml)
+                    checkTittle = re.findall('property="og:title" content="(.*)"', getHtml)
+                    checkDescription = re.findall('property="og:description" content="(.*)"', getHtml)
 
-                    newList = nextRes1.split()
+                    newList = sumStrings(checkP, checkH, checkTittle, checkDescription).split()
                     transList = []
 
-                    x = 0
-                    for x in range(len(newList)-1):
-                        if x % 7 == 1:
+                    for x in range(len(newList)):
+                        if x % 3 == 1:
                             transList.append(newList[x])
 
                     res = langdetect.detect(str(newList))
+                    print(res)
 
                 except IndexError:
                     break
+
             except langdetect.lang_detect_exception.LangDetectException:
                 # print('other')
                 continue
 
 
 if __name__ == '__main__':
-
+    print('----- %s' % (time.time() - getTime))
     p1 = multiprocessing.Process(target=checklist0)
     p2 = multiprocessing.Process(target=checklist1)
     p3 = multiprocessing.Process(target=checklist2)
