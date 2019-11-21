@@ -7,7 +7,7 @@ import multiprocessing
 from natsort import natsorted, ns
 
 
-mainList = glob('D:/DataClusteringSample0107/testFiles/00/*.html')
+mainList = glob('D:/DataClusteringSample0107/20191101/00/*.html')
 mainList = natsorted(mainList, alg=ns.IGNORECASE)
 fileFolder = io.open(mainList[0], 'r', encoding='utf-8')
 getHtml = fileFolder.read()

@@ -7,7 +7,7 @@ import multiprocessing
 from natsort import natsorted, ns
 
 
-mainList = glob('D:/DataClusteringSample0107/testFiles/00/14.html')
+mainList = glob('D:/DataClusteringSample0107/20191101/00/*.html')
 mainList = natsorted(mainList, alg=ns.IGNORECASE)
 fileFolder = io.open(mainList[0], 'r', encoding='utf-8')
 getHtml = fileFolder.read()
@@ -65,43 +65,44 @@ def detectLang(shortenedListStr, extractedListRus, extractedListEng,shortenedLis
         return 'other'
 
 
+def mainFunction(i):
+    fileFolder = io.open(mainList[i], 'r', encoding='utf-8')
+    getHtml = fileFolder.read()
+    print(fileFolder.name)
+
+    deleteLink = re.sub(r'href="(.*)"', '', getHtml)
+    checkP = re.findall('<p>(.*)</p>', deleteLink)
+    checkH = re.findall('<h\d>(.*)</h\d>', deleteLink)
+    checkTittle = re.findall('property="og:title" content="(.*)"', deleteLink)
+    checkDescription = re.findall('property="og:description" content="(.*)"', deleteLink)
+
+    pageList = sumStrings(checkP, checkH, checkTittle, checkDescription)
+    pageList = re.sub(r'&lt;(.*)&gt;', '', pageList)
+    pageList = pageList.split()
+
+    shortenedList = []
+    extractedListRus = []
+    extractedListEng = []
+
+    for x in range(len(pageList)):
+        if x % 2 == 1:
+            shortenedList.append(pageList[x])
+
+    shortenedListStr = str(shortenedList)
+    langflag = detectLang(shortenedListStr, extractedListRus, extractedListEng, shortenedList)
+    print(langflag)
+
+
 def checklist0():
     for i in range(len(mainList)):
         if i % 4 == 0:
             try:
                 try:
-                    fileFolder = io.open(mainList[i], 'r', encoding='utf-8')
-                    getHtml = fileFolder.read()
-                    print(fileFolder.name)
-
-                    deleteLink = re.sub(r'href="(.*)"', '', getHtml)
-                    checkP = re.findall('<p>(.*)</p>', deleteLink)
-                    checkH = re.findall('<h\d>(.*)</h\d>', deleteLink)
-                    checkTittle = re.findall('property="og:title" content="(.*)"', deleteLink)
-                    checkDescription = re.findall('property="og:description" content="(.*)"', deleteLink)
-
-                    pageList = sumStrings(checkP, checkH, checkTittle, checkDescription)
-                    pageList = re.sub(r'&lt;(.*)&gt;', '', pageList)
-                    pageList = pageList.split()
-
-                    shortenedList = []
-                    extractedListRus = []
-                    extractedListEng = []
-
-                    for x in range(len(pageList)):
-                        if x % 2 == 1:
-                            shortenedList.append(pageList[x])
-
-                    shortenedListStr = str(shortenedList)
-                    langflag = detectLang(shortenedListStr, extractedListRus,extractedListEng,shortenedList)
-
-
-
+                   mainFunction(i)
                 except IndexError:
                     break
 
             except langdetect.lang_detect_exception.LangDetectException:
-                # print('other')
                 continue
 
 def checklist1():
@@ -109,32 +110,10 @@ def checklist1():
         if i % 4 == 1:
             try:
                 try:
-                    fileFolder = io.open(mainList[i], 'r', encoding='utf-8')
-                    getHtml = fileFolder.read()
-                    print(fileFolder.name)
-
-                    deleteLink = re.sub(r'href="(.*)"', '', getHtml)
-                    checkP = re.findall('<p>(.*)</p>', deleteLink)
-                    checkH = re.findall('<h\d>(.*)</h\d>', deleteLink)
-                    checkTittle = re.findall('property="og:title" content="(.*)"', deleteLink)
-                    checkDescription = re.findall('property="og:description" content="(.*)"', deleteLink)
-
-                    pageList = sumStrings(checkP, checkH, checkTittle, checkDescription).split()
-                    shortenedList = []
-                    extractedListRus = []
-                    extractedListEng = []
-
-                    for x in range(len(pageList)):
-                        if x % 2 == 1:
-                            shortenedList.append(pageList[x])
-
-                    shortenedListStr = str(shortenedList)
-                    print(detectLang(shortenedListStr, extractedListRus, extractedListEng, shortenedList))
-                    print(shortenedList)
+                    mainFunction(i)
                 except IndexError:
                     break
             except langdetect.lang_detect_exception.LangDetectException:
-                # print('other')
                 continue
 
 def checklist2():
@@ -142,34 +121,11 @@ def checklist2():
         if i % 4 == 2:
             try:
                 try:
-                    fileFolder = io.open(mainList[i], 'r', encoding='utf-8')
-                    getHtml = fileFolder.read()
-                    print(fileFolder.name)
-
-                    deleteLink = re.sub(r'href="(.*)"', '', getHtml)
-                    checkP = re.findall('<p>(.*)</p>', deleteLink)
-                    checkH = re.findall('<h\d>(.*)</h\d>', deleteLink)
-                    checkTittle = re.findall('property="og:title" content="(.*)"', deleteLink)
-                    checkDescription = re.findall('property="og:description" content="(.*)"', deleteLink)
-
-                    pageList = sumStrings(checkP, checkH, checkTittle, checkDescription).split()
-                    shortenedList = []
-                    extractedListRus = []
-                    extractedListEng = []
-
-                    for x in range(len(pageList)):
-                        if x % 2 == 1:
-                            shortenedList.append(pageList[x])
-
-                    shortenedListStr = str(shortenedList)
-                    print(detectLang(shortenedListStr, extractedListRus,extractedListEng,shortenedList))
-                    print(shortenedList)
-
+                    mainFunction(i)
                 except IndexError:
                     break
 
             except langdetect.lang_detect_exception.LangDetectException:
-                # print('other')
                 continue
 
 def checklist3():
@@ -177,41 +133,16 @@ def checklist3():
         if i % 4 == 3:
             try:
                 try:
-                    fileFolder = io.open(mainList[i], 'r', encoding='utf-8')
-                    getHtml = fileFolder.read()
-                    print(fileFolder.name)
-
-                    deleteLink = re.sub(r'href="(.*)"', '', getHtml)
-                    checkP = re.findall('<p>(.*)</p>', deleteLink)
-                    checkH = re.findall('<h\d>(.*)</h\d>', deleteLink)
-                    checkTittle = re.findall('property="og:title" content="(.*)"', deleteLink)
-                    checkDescription = re.findall('property="og:description" content="(.*)"', deleteLink)
-
-                    pageList = sumStrings(checkP, checkH, checkTittle, checkDescription).split()
-                    shortenedList = []
-                    extractedListRus = []
-                    extractedListEng = []
-
-                    for x in range(len(pageList)):
-                        if x % 2 == 1:
-                            shortenedList.append(pageList[x])
-
-                    shortenedListStr = str(shortenedList)
-                    print(detectLang(shortenedListStr, extractedListRus, extractedListEng, shortenedList))
-                    print(shortenedList)
-
+                    mainFunction(i)
                 except IndexError:
                     break
-
             except langdetect.lang_detect_exception.LangDetectException:
-                # print('other')
                 continue
 
 
 if __name__ == '__main__':
     getTime = time.time()
     print(len(mainList))
-
     p1 = multiprocessing.Process(target=checklist0)
     p2 = multiprocessing.Process(target=checklist1)
     p3 = multiprocessing.Process(target=checklist2)
@@ -224,6 +155,6 @@ if __name__ == '__main__':
     p2.join()
     p3.join()
     p4.join()
-    print(counter('other'))
+
     print('----- %s' % (time.time() - getTime))
 
