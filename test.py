@@ -6,14 +6,11 @@ import io
 import multiprocessing
 from natsort import natsorted, ns
 
-getTime = time.time()
-mainList = glob('D:/DataClusteringSample0107/20191101/*/*.html')
-mainList = natsorted(mainList, alg=ns.IGNORECASE)
 
-print(len(mainList))
+mainList = glob('D:/DataClusteringSample0107/testFiles/00/*.html')
+mainList = natsorted(mainList, alg=ns.IGNORECASE)
 fileFolder = io.open(mainList[0], 'r', encoding='utf-8')
 getHtml = fileFolder.read()
-
 
 def sumStrings(x,y,z,i):
     sum = str(x + y + z + i)
@@ -144,7 +141,8 @@ def checklist3():
 
 
 if __name__ == '__main__':
-    print('----- %s' % (time.time() - getTime))
+    getTime = time.time()
+    print(len(mainList))
     p1 = multiprocessing.Process(target=checklist0)
     p2 = multiprocessing.Process(target=checklist1)
     p3 = multiprocessing.Process(target=checklist2)
@@ -157,5 +155,5 @@ if __name__ == '__main__':
     p2.join()
     p3.join()
     p4.join()
+    print('----- %s' % (time.time() - getTime))
 
-print('----- %s' % (time.time() - getTime))
